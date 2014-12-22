@@ -740,8 +740,21 @@ public:
     [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
+- (void)preload
+{
+    _audioStream->setPreloading(true);
+    
+    _audioStream->open();
+}
+
 - (void)play
 {
+    if (_audioStream->isPreloading()) {
+        _audioStream->startCachedDataPlayback();
+        
+        return;
+    }
+    
     _audioStream->open();
 
     if (!_reachability) {
@@ -965,6 +978,11 @@ public:
 - (NSString*)suggestedFileExtension
 {
     return [_private suggestedFileExtension];
+}
+
+- (void)preload
+{
+    [_private preload];
 }
 
 - (void)play

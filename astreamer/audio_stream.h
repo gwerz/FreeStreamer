@@ -64,6 +64,8 @@ public:
     void close(bool closeParser);
     void pause();
     
+    void startCachedDataPlayback();
+    
     AS_Playback_Position playbackPosition();
     float durationInSeconds();
     void seekToOffset(float offset);
@@ -78,6 +80,8 @@ public:
     void setDefaultContentType(CFStringRef defaultContentType);
     void setSeekOffset(float offset);
     void setContentLength(UInt64 contentLength);
+    void setPreloading(bool preloading);
+    bool isPreloading();
     
     void setOutputFile(CFURLRef url);
     CFURLRef outputFile();
@@ -117,6 +121,7 @@ private:
     bool m_audioStreamParserRunning;
     bool m_initialBufferingCompleted;
     bool m_discontinuity;
+    bool m_preloading;
     
     UInt64 m_contentLength;
     
